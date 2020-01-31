@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+JP|Noto+Serif+KR&display=swap');
+
+body { display: flex; justify-content: center; align-items: center; margin: 0; height: 100%; font-size: 2em }
+contents { display: flex; flex-direction: column }
+.row { display: flex; flex-direction: row }
+.slide { margin: 0.2em; box-shadow: 5px 6px }
+
+.jp { font-family: 'Noto Serif JP', serif }
+.kr { font-family: 'Noto Serif KR', serif }
+
+.centered { display: flex; justify-content: center; align-items: center }
+.slide { width: 4em; height: 4em; border: 1px solid }
+
+.slide { overflow: hidden }
+
+.slidee {
+	position: relative; top: -100%;
+	margin: 0; padding: 0;
+	width: 100%; height: 100%;
+	transition: top 0.8s cubic-bezier(0.25, 1, 0, 1)
+}
+
+.slide:hover > .slidee { top: 0% }
+
+p {
+	margin: 0; padding: 0;
+	height: 1em;
+	line-height: 1;
+}
