@@ -13,10 +13,3 @@ def slide(shown, hidden):
 	return '<div class="slide"><div class="centered slidee"><p>%s</p></div><div class="centered slidee"><p>%s</p></div></div>' % (hidden, shown)
 def row(contents, font):
 	return div(contents, 'row ' + font)
-
-style = '<link rel="stylesheet" href="han.css">'
-
-a = slide('hi', 'how are you')
-b = box('dude')
-
-open('zzz.html', 'w').write(style + row(a + b, 'kr'))
