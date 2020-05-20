@@ -158,11 +158,11 @@ most.first(500).each do |h, j, k|
 
 	page += row 'kr', h.chars.each_with_index.map {|hanz, i| slide k[i], hanjas[hanz][k[i]]} .join
 
-	File.write "testpages/#{h}.html", '<link rel="stylesheet" href="word.css">' + (:div.tag page, id: 'contents')
+	File.write "word/#{h}.html", '<link rel="stylesheet" href="word.css">' + (:div.tag page, id: 'contents')
 
 	### generate main index page ###
 
-	tds  = :td.tag(:a.tag h, href: "testpages/#{h}.html")
+	tds  = :td.tag(:a.tag h, href: "word/#{h}.html")
 	tds += :td.tag k
 	tds += :td.tag kanjigo_to_furiganas[j].join
 
@@ -171,4 +171,4 @@ end
 
 index += '</table>'
 
-File.write 'rindex.html', index
+File.write 'index.html', index
