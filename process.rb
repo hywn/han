@@ -13,10 +13,10 @@ def lines(path)
 	File.read(path).lines.map(&:strip).filter {|s| not s.empty?}
 end
 
-L_VARIANTS = lines 'JPVariants.txt'
-L_FURIGANAS = lines 'JmdictFurigana.txt'
-L_HANJAS = lines 'hanja.txt'
-L_HANJAEOS = lines 'hanjas.csv'
+L_VARIANTS = lines 'sources/JPVariants.txt'
+L_FURIGANAS = lines 'sources/JmdictFurigana.txt'
+L_HANJAS = lines 'sources/hanja.txt'
+L_HANJAEOS = lines 'sources/hanjas.csv'
 
 kanji_to_hanzi = {}
 hanzigo_to_kanjigo = {}
@@ -78,8 +78,8 @@ end
 
 common = common.filter {|h, _| h.length == 2}
 
-most_jp = (lines '44492-japanese-words-latin-lines-removed.txt')
-most_ko = (lines 'ko_50k.txt').map {|line| line.split(' ')[0]}
+most_jp = (lines 'sources/44492-japanese-words-latin-lines-removed.txt')
+most_ko = (lines 'sources/ko_50k.txt').map {|line| line.split(' ')[0]}
 
 most_jp_s = most_jp.to_set
 most_ko_s = most_ko.to_set
