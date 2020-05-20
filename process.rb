@@ -5,7 +5,7 @@ require 'set'
 # :tag 'hi', href: 'website' => <tag href="website">hi</tag>
 class Symbol
 	def tag(contents, attributes={})
-		return "<#{self.to_s} #{attributes.map {|k, v| "#{k}=\"#{v}\""} .join ' '}>#{contents}</#{self.to_s}>"
+		return "<#{self.to_s}#{attributes.empty? ? '' : ' '}#{attributes.map {|k, v| "#{k}=\"#{v}\""} .join ' '}>#{contents}</#{self.to_s}>"
 	end
 end
 
@@ -91,15 +91,19 @@ most = common
 #########################
 
 def box(text)
-	"<div class=\"centered slide\"><p>#{text}</p></div>"
+	:div.tag (:p.tag text), 'class': 'centered slide'
+end
+
+def slidee(text)
+	:div.tag (:p.tag text), 'class': 'centered slidee'
 end
 
 def slide(shown, hidden)
-	"<div class=\"slide\"><div class=\"centered slidee\"><p>#{hidden}</p></div><div class=\"centered slidee\"><p>#{shown}</p></div></div>"
+	:div.tag (slidee hidden) + (slidee shown), 'class': 'slide'
 end
 
 def row(font, contents)
-	"<div class=\"row #{font}\">#{contents}</div>"
+	:div.tag contents, 'class': "row #{font}"
 end
 
 #########################
