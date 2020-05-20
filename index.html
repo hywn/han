@@ -17,10 +17,11 @@ td { border: none; padding: 0.2em 1.2em 0.2em 1.2em }
 	<h1>korean/japanese character cognates (scroll down for wordlist)</h1>
 	<p>did you know that korean and japanese share a lot of vocabulary that came from the same origins (usually middle chinese)? below is a list of two-character words with readings in both japanese and korean. the list is sorted roughly by frequency in both languages (words should be used frequently in both languages).</p>
 	<p>if you click on a word, you can view it (along with the japanese and korean readings) on a pretty page. on the pretty page, you can hover over the japanese to view each character's japanese-simplified form (if it exists), and you can hover over the korean to view the full hanja identity/the hanja meaning + pronunciation.</p>
-	<p>the wordlist and word pages are generated with a super hacked-together python script (this text is literally in the script). i'll probably clean it up one day, but that day is not today.</p>
+	<p>the wordlist and word pages are generated with a ruby script that you can find <a href="https://github.com/hywn/han">here</a>.</p>
 	<p>notable problems</p>
 	<ul>
-		<li>doesn't account for japanese irregularities and as a result just doesn't generate some pages, e.g. 時計 -> とけい</li>
+		<li>doesn't account for irregular japanese readings, e.g. 時計 -> とけい</li>
+		<li>doesn't account for korean initial sound changes, e.g. 女子 -> 여자</li>
 		<li>korean word frequency just accounts for hangul and not hanja, e.g. 以上, 理想, and 異常 are all equally as common b/c they are all 이상</li>
 		<li>no home button/any navigation on word pages</li>
 	</ul>
