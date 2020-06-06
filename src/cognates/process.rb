@@ -1,4 +1,9 @@
 require 'set'
+require 'fileutils'
+
+output_path = File.absolute_path ARGV[0]
+
+abort "output `#{output_path}` is not a directory!" unless File.directory? output_path
 
 # :tag 'hi', href: 'website' => <tag href="website">hi</tag>
 class Symbol
@@ -106,6 +111,12 @@ end
 
 #########################
 
+css_path = File.absolute_path 'word.css'
+
+Dir.chdir output_path
+
+Dir.mkdir 'word/' unless Dir.exist? 'word/'
+
 table = '<table>'
 
 most.first(500).each do |h, j, k|
@@ -137,3 +148,4 @@ end
 table += '</table>'
 
 File.write 'table.html', table
+FileUtils.cp css_path, 'word/word.css'
