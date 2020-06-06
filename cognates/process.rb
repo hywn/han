@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 require 'set'
 
 # :tag 'hi', href: 'website' => <tag href="website">hi</tag>
@@ -108,45 +106,7 @@ end
 
 #########################
 
-index = %{
-<style>
-body {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-}
-
-.box { width: 33em; align-items: right; padding: 1em }
-
-td { border: none; padding: 0.2em 1.2em 0.2em 1.2em }
-</style>
-
-<div class="box">
-	<h1>korean/japanese character cognates (scroll down for wordlist)</h1>
-	<p>did you know that korean and japanese share a lot of vocabulary that came from the same origins (usually middle chinese)? below is a list of two-character words with readings in both japanese and korean. the list is sorted roughly by frequency in both languages (words should be used frequently in both languages).</p>
-	<p>if you click on a word, you can view it (along with the japanese and korean readings) on a pretty page. on the pretty page, you can hover over the japanese to view each character's japanese-simplified form (if it exists), and you can hover over the korean to view the full hanja identity/the hanja meaning + pronunciation.</p>
-	<p>the wordlist and word pages are generated with a ruby script that you can find <a href="https://github.com/hywn/han">here</a>.</p>
-	<p>notable problems</p>
-	<ul>
-		<li>doesn't account for irregular japanese readings, e.g. 時計 -> とけい</li>
-		<li>doesn't account for korean initial sound changes, e.g. 女子 -> 여자</li>
-		<li>korean word frequency just accounts for hangul and not hanja, e.g. 以上, 理想, and 異常 are all equally as common b/c they are all 이상</li>
-		<li>no home button/any navigation on word pages</li>
-	</ul>
-	<p>file sources</p>
-	<ul>
-		<li><a href="https://github.com/dbravender/hanja-dictionary">hanja word list</a> (hanjas.csv)</li>
-		<li><a href="https://github.com/myungcheol/hanja">hanja info</a> (hanja.txt)</li>
-		<li><a href="https://github.com/pinedance/hanTNsrc">japanese to traditional character list</a> (JPVariants.txt)</li>
-		<li><a href="https://github.com/Doublevil/JmdictFurigana">japanese readings</a> (JmdictFurigana.txt)</li>
-		<li><a href="https://github.com/oprogramador/most-common-words-by-language">korean frequency list</a> (ko_50k.txt)</li>
-		<li><a href="https://github.com/hingston/japanese">japanese frequency list</a> (44492-japanese-words-latin-lines-removed.txt)</li>
-	</ul>
-</div>
-<table>
-}
+table = '<table>'
 
 most.first(500).each do |h, j, k|
 	infos = h.chars.each_with_index.map {|char, i| hanjas[char][k[i]] }
@@ -171,9 +131,9 @@ most.first(500).each do |h, j, k|
 	tds += :td.tag k
 	tds += :td.tag kanjigo_to_furiganas[j].join
 
-	index += :tr.tag tds
+	table += :tr.tag tds
 end
 
-index += '</table>'
+table += '</table>'
 
-File.write 'index.html', index
+File.write 'table.html', table
