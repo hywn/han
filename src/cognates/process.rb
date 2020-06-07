@@ -1,32 +1,24 @@
 require 'set'
 require 'fileutils'
 
-output_path = File.absolute_path ARGV[0]
-
-abort "output `#{output_path}` is not a directory!" unless File.directory? output_path
-
-# :tag 'hi', href: 'website' => <tag href="website">hi</tag>
-class Symbol
-	def tag(contents, attributes={})
-		return "<#{self.to_s}#{attributes.empty? ? '' : ' '}#{attributes.map {|k, v| "#{k}=\"#{v}\""} .join ' '}>#{contents}</#{self.to_s}>"
-	end
-end
+#########################
 
 def lines(path)
 	File.read(path).lines.map(&:strip).filter {|s| not s.empty?}
 end
 
-L_VARIANTS = lines 'sources/JPVariants.txt'
+L_VARIANTS  = lines 'sources/JPVariants.txt'
 L_FURIGANAS = lines 'sources/JmdictFurigana.txt'
-L_HANJAS = lines 'sources/hanja.txt'
-L_HANJAEOS = lines 'sources/hanjas.csv'
+L_HANJAS    = lines 'sources/hanja.txt'
+L_HANJAEOS  = lines 'sources/hanjas.csv'
 
-kanji_to_hanzi = {}
-hanzigo_to_kanjigo = {}
+# just nice to see types
+kanji_to_hanzi       = {}
+hanzigo_to_kanjigo   = {}
 kanjigo_to_furiganas = {}
-hanjas = {}
-kanjigo = Set.new
-hanjaeo = {}
+hanjas               = {}
+kanjigo              = Set.new
+hanjaeo              = {}
 
 # build kanji_to_hanzi
 kanji_to_hanzi = L_VARIANTS.map {|line| line.split("\t").reverse} .to_h
@@ -107,13 +99,26 @@ end
 
 #########################
 
+# output_path/
+# ├── word/
+# │   ├── word.css
+# │   ├── ??.html
+# │   └── ...
+# └── table.html
+
+# not very nice to check args at very end but
+
+output_path = File.absolute_path ARGV[0]
+abort "output `#{output_path}` is not a directory!" unless File.directory? output_path
+
 css_path = File.absolute_path 'word.css'
 
 Dir.chdir output_path
 
-Dir.mkdir 'word/' unless Dir.exist? 'word/'
+FileUtils.mkdir_p 'word/'
+FileUtils.cp css_path, 'word/word.css'
 
-table = '<table>'
+trs = ''
 
 most.first(500).each do |h, j, k|
 	infos = h.chars.each_with_index.map {|char, i| hanjas[char][k[i]] }
@@ -134,14 +139,11 @@ most.first(500).each do |h, j, k|
 
 	### generate main index page ###
 
-	tds  = :td.tag(:a.tag h, href: "word/#{h}.html")
-	tds += :td.tag k
-	tds += :td.tag kanjigo_to_furiganas[j].join
+	tds  = %Q[<td><a href="word/#{h}.html">#{h}</a></td>]
+	tds += %Q[<td>#{k}</td>]
+	tds += %Q[<td>#{kanjigo_to_furiganas[j].join}</td>]
 
-	table += :tr.tag tds
+	trs += %Q[<tr>#{tds}</tr>]
 end
 
-table += '</table>'
-
-File.write 'table.html', table
-FileUtils.cp css_path, 'word/word.css'
+File.write 'table.html', %Q[<table>#{trs}</table>]
