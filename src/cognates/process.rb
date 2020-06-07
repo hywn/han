@@ -93,20 +93,16 @@ most = common
 
 #########################
 
-def box(text)
-	:div.tag (:p.tag text), 'class': 'centered slide'
+def slidee(contents)
+	%Q[<div class="slidee">#{contents}</div>]
 end
 
-def slidee(text)
-	:div.tag (:p.tag text), 'class': 'centered slidee'
+def slide(contents)
+	%Q[<div class="slide">#{contents}</div>]
 end
 
-def slide(shown, hidden)
-	:div.tag (slidee hidden) + (slidee shown), 'class': 'slide'
-end
-
-def row(font, contents)
-	:div.tag contents, 'class': "row #{font}"
+def slider(shown, hidden)
+	slide((slidee hidden) + (slidee shown))
 end
 
 #########################
@@ -128,13 +124,13 @@ most.first(500).each do |h, j, k|
 
 	### generate each individual page ###
 
-	page  = row 'kr', h.chars.map {|char| box char} .join
+	page  = h.chars.map {|char| slide char} .join
 
-	page += row 'jp', yomis.each_with_index.map {|yomi, i| j[i] == h[i] ? (box yomi) : (slide yomi, j[i])} .join
+	page += yomis.each_with_index.map {|yomi, i| j[i] == h[i] ? (slide yomi) : (slider yomi, j[i])} .join
 
-	page += row 'kr', h.chars.each_with_index.map {|hanz, i| slide k[i], hanjas[hanz][k[i]]} .join
+	page += h.chars.each_with_index.map {|hanz, i| slider k[i], hanjas[hanz][k[i]]} .join
 
-	File.write "word/#{h}.html", '<link rel="stylesheet" href="word.css">' + (:div.tag page, id: 'contents')
+	File.write "word/#{h}.html", '<link rel="stylesheet" href="word.css">' + page
 
 	### generate main index page ###
 
