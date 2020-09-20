@@ -37,4 +37,6 @@ body {
 .box { padding: 1em; width: 32em }
 
 td { border: none; padding: 0.2em 1.2em 0.2em 1.2em }
+
+h1 { margin: 0 }
 </style>
