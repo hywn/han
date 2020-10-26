@@ -8,8 +8,7 @@ clean:
 ### landing page ###
 
 docs/index.html: src/index.md
-	echo '<link rel="stylesheet" href="https://hywn.github.io/src/list.css" />' > $@
-	pandoc --from markdown-smart-auto_identifiers --to html $< >> $@
+	pandoc --from markdown-smart-auto_identifiers --to html $< > $@
 
 
 ### 1800 hanja ###
